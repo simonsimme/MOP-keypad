@@ -31,7 +31,7 @@ typedef int            bool;
 
 #define GPIOD            0x40020C00
 #define GPIOD_MODER_LOW  (GPIOD)
-#define GPIOD_MODER_HIGH (GPIOD +  2)
+#define GPIOD_MODER_HIGH (GPIOD +  2) // adding to the correct port
 #define GPIOD_OTYPER     (GPIOD +  4)
 #define GPIOD_OSPEEDR    (GPIOD +  8)
 #define GPIOD_PUPDR      (GPIOD + 12)
@@ -60,12 +60,9 @@ typedef int            bool;
 
 void app_init(void)
 {
-    // Start clocks for port D and port E.
     *(volatile ulong*)0x40023830 = 0x18;
-    // Set port D to medium speed.
     *(volatile uint*)0x40020C08 = 0x55555555;
 
-    // Rig port D to work with a keypad.
     *(volatile ushort*) GPIOD_MODER_LOW  = 0x5555;
     *(volatile ushort*) GPIOD_MODER_HIGH = 0x5500;
     *(volatile ushort*) GPIOD_OTYPER    &= 0x00FF;
@@ -74,12 +71,7 @@ void app_init(void)
 }
 
 
-// =============================================================================
-// DATA
 
-/**
- * @brief A matrix with the key-values for the keypad.
- */
 const uchar KEYCODE[4][4] =
 { {  1, 2,  3, 10 }
 , {  4, 5,  6, 11 }
