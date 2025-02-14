@@ -1,5 +1,5 @@
 
-__attribute__((naked)) __attribute__((section (".start_section")) )
+
 void startup ( void )
 {
 __asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
@@ -129,7 +129,7 @@ void activate_row(uint row)
         *gpiod_odr_high = 0x80; break;
 
     default: break;
-        // NAUGHTY MOVE
+        
     }
 }
 
